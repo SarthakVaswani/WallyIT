@@ -93,9 +93,11 @@ class _WallpaperHomeState extends State<WallpaperHome> {
                         );
                       }),
                 ),
-                Positioned(
-                  left: 340,
-                  top: 600,
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
                   child: FloatingActionButton(
                     onPressed: () {
                       loadMore();
