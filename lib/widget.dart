@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wallpaper_app/cat_screen.dart';
-import 'data.dart';
 
 class CatWidget extends StatelessWidget {
   final String imgUrl;

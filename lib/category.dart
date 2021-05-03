@@ -9,9 +9,8 @@ class CategoryPage extends StatefulWidget {
 }
 
 class _CategoryPageState extends State<CategoryPage> {
-  List<Cat_model> categories = new List();
+  List<Cat_model> categories = [];
 
-  ScrollController _scrollController = new ScrollController();
   @override
   void initState() {
     categories = getCategory();

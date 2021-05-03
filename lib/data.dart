@@ -3,7 +3,7 @@ import 'cat_model.dart';
 String apiKey = "563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf";
 
 List<Cat_model> getCategory() {
-  List<Cat_model> categories = List();
+  List<Cat_model> categories = [];
   Cat_model categorymodel = Cat_model();
 
   categorymodel.imgUrl =
