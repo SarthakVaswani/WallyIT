@@ -58,88 +58,101 @@ class _CategoryScreemState extends State<CategoryScreem> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black54,
-      body: Column(
-        children: [
-          Expanded(
-            child: Stack(
-              children: [
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 17) +
-                      EdgeInsets.only(top: 15),
-                  child: GridView.builder(
-                      itemCount: images0.length,
-                      shrinkWrap: true,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisSpacing: 10,
-                          crossAxisCount: 2,
-                          childAspectRatio: 7 / 10,
-                          mainAxisSpacing: 25),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FullScreen(
-                                  imageUrl: images0[index]['src']['large2x'],
-                                ),
-                              ),
-                            );
-                          },
-                          // Image.network(
-                          //     images[index]['src']['tiny'],
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        images0[index]['src']['tiny']))),
-                          ),
-                        );
-                      }),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.bottomRight,
-                  child: FloatingActionButton(
-                    onPressed: () {
-                      loadMore();
-                      final snackBar = SnackBar(
-                        content: Text('More Wallpapers loaded'),
-                        duration: Duration(milliseconds: 200),
-                      );
-                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                    },
-                    backgroundColor: Colors.white,
-                    child: Icon(Icons.refresh),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 35,
                   ),
-                ),
-              ],
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ),
-          ),
+            Expanded(
+              child: Stack(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 17) +
+                        EdgeInsets.only(top: 15),
+                    child: GridView.builder(
+                        itemCount: images0.length,
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 10,
+                            crossAxisCount: 2,
+                            childAspectRatio: 7 / 10,
+                            mainAxisSpacing: 25),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => FullScreen(
+                                    imageUrl: images0[index]['src']['large2x'],
+                                  ),
+                                ),
+                              );
+                            },
+                            // Image.network(
+                            //     images[index]['src']['tiny'],
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  image: DecorationImage(
+                                      fit: BoxFit.cover,
+                                      image: NetworkImage(
+                                          images0[index]['src']['tiny']))),
+                            ),
+                          );
+                        }),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: FloatingActionButton(
+                      onPressed: () {
+                        loadMore();
+                        final snackBar = SnackBar(
+                          content: Text('More Wallpapers loaded'),
+                          duration: Duration(milliseconds: 200),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      },
+                      backgroundColor: Colors.white,
+                      child: Icon(Icons.refresh),
+                    ),
+                  ),
+                ],
+              ),
+            ),
 
-          // InkWell(
-          //   onTap: () {
-          //     loadMore();
-          //   },
-          //   child: Container(
-          //     decoration: BoxDecoration(
-          //       color: Colors.white,
-          //       borderRadius: BorderRadius.circular(10),
-          //     ),
-          //     height: 50,
-          //     width: double.infinity,
-          //     child: Center(
-          //         child: Text(
-          //       "Load More",
-          //       style: TextStyle(color: Colors.black, fontSize: 30),
-          //     )),
-          //   ),
-          // )
-        ],
+            // InkWell(
+            //   onTap: () {
+            //     loadMore();
+            //   },
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: Colors.white,
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     height: 50,
+            //     width: double.infinity,
+            //     child: Center(
+            //         child: Text(
+            //       "Load More",
+            //       style: TextStyle(color: Colors.black, fontSize: 30),
+            //     )),
+            //   ),
+            // )
+          ],
+        ),
       ),
     );
   }

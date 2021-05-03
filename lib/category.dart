@@ -21,30 +21,38 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black54,
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 17) +
-                  EdgeInsets.only(top: 15),
-              child: GridView.builder(
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemCount: categories.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      childAspectRatio: 2 / 2,
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, index) {
-                    return CatWidget(
-                      imgUrl: categories[index].imgUrl,
-                      catname: categories[index].catName,
-                    );
-                  }),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              child: Text(
+                "Category",
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 17) +
+                    EdgeInsets.only(top: 15),
+                child: GridView.builder(
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemCount: categories.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        childAspectRatio: 2 / 2,
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 10,
+                        mainAxisSpacing: 10),
+                    itemBuilder: (context, index) {
+                      return CatWidget(
+                        imgUrl: categories[index].imgUrl,
+                        catname: categories[index].catName,
+                      );
+                    }),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
