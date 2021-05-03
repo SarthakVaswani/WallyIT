@@ -27,6 +27,7 @@ class _MyAppState extends State<MyApp> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -34,17 +35,27 @@ class _MyAppState extends State<MyApp> {
             SpinKitPulse(
               size: 70,
               color: Colors.white,
-              duration: Duration(seconds: 2),
+              duration: Duration(milliseconds: 900),
             ),
             SizedBox(
               height: 50,
             ),
             Text(
-              "Powered by Pexel",
+              "Wall It",
               style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: Colors.yellow),
+                  color: Colors.blue[200]),
+            ),
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              "Powered by Pexels",
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey),
             )
           ],
         ),
