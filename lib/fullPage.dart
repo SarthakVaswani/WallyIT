@@ -77,6 +77,7 @@ class _FullScreenState extends State<FullScreen> {
                                       content: Text('Wallpaper changed'));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
+                                  Navigator.pop(context);
                                 }),
                             SizedBox(
                               height: 15,
@@ -98,6 +99,7 @@ class _FullScreenState extends State<FullScreen> {
                                       content: Text('Wallpaper changed'));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
+                                  Navigator.pop(context);
                                 }),
                             SizedBox(
                               height: 15,
@@ -119,6 +121,7 @@ class _FullScreenState extends State<FullScreen> {
                                       content: Text('Wallpaper changed'));
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(snackBar);
+                                  Navigator.pop(context);
                                 }),
                           ],
                         ),

@@ -114,19 +114,22 @@ class _CategoryScreemState extends State<CategoryScreem> {
                   SizedBox(
                     height: 10,
                   ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton(
-                      onPressed: () {
-                        loadMore();
-                        final snackBar = SnackBar(
-                          content: Text('More Wallpapers loaded'),
-                          duration: Duration(milliseconds: 200),
-                        );
-                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                      },
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.refresh),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 10, bottom: 10),
+                    child: Align(
+                      alignment: Alignment.bottomRight,
+                      child: FloatingActionButton(
+                        onPressed: () {
+                          loadMore();
+                          final snackBar = SnackBar(
+                            content: Text('More Wallpapers loaded'),
+                            duration: Duration(milliseconds: 200),
+                          );
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        },
+                        backgroundColor: Colors.white,
+                        child: Icon(Icons.refresh),
+                      ),
                     ),
                   ),
                 ],
