@@ -14,6 +14,8 @@ class CategoryScreem extends StatefulWidget {
 class _CategoryScreemState extends State<CategoryScreem> {
   List images0 = [];
   int pages = 1;
+  bool isBottom = false;
+  ScrollController _controller = new ScrollController();
 
   getCATWallpaper() async {
     await http.get(
@@ -22,7 +24,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
         ),
         headers: {
           "Authorization":
-              "563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf"
+              "563492ad6f91700001000001228961f433c9477d9bbd66359079c8c7"
         }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
@@ -40,7 +42,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
             pages.toString();
     await http.get(Uri.parse(url), headers: {
       'Authorization':
-          '563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf'
+          '563492ad6f91700001000001228961f433c9477d9bbd66359079c8c7'
     }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
@@ -52,6 +54,11 @@ class _CategoryScreemState extends State<CategoryScreem> {
   void initState() {
     getCATWallpaper();
     super.initState();
+    _controller.addListener(() {
+      if (_controller.offset == _controller.position.maxScrollExtent) {
+        loadMore();
+      }
+    });
   }
 
   @override
@@ -79,6 +86,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
                     padding: EdgeInsets.symmetric(horizontal: 17) +
                         EdgeInsets.only(top: 15),
                     child: GridView.builder(
+                        controller: _controller,
                         itemCount: images0.length,
                         shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -111,49 +119,9 @@ class _CategoryScreemState extends State<CategoryScreem> {
                           );
                         }),
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(right: 10, bottom: 10),
-                    child: Align(
-                      alignment: Alignment.bottomRight,
-                      child: FloatingActionButton(
-                        onPressed: () {
-                          loadMore();
-                          final snackBar = SnackBar(
-                            content: Text('More Wallpapers loaded'),
-                            duration: Duration(milliseconds: 200),
-                          );
-                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                        },
-                        backgroundColor: Colors.white,
-                        child: Icon(Icons.refresh),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-
-            // InkWell(
-            //   onTap: () {
-            //     loadMore();
-            //   },
-            //   child: Container(
-            //     decoration: BoxDecoration(
-            //       color: Colors.white,
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     height: 50,
-            //     width: double.infinity,
-            //     child: Center(
-            //         child: Text(
-            //       "Load More",
-            //       style: TextStyle(color: Colors.black, fontSize: 30),
-            //     )),
-            //   ),
-            // )
           ],
         ),
       ),
