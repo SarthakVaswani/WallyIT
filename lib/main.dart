@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:wallpaper_app/mainPage.dart';
+import 'package:wallpaper_app/UI/mainPage.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -41,11 +41,11 @@ class _MyAppState extends State<MyApp> {
               height: 50,
             ),
             Text(
-              "Wall It",
+              "WallyIt",
               style: TextStyle(
                   fontSize: 40,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue[200]),
+                  color: Color(0xff92E9FF)),
             ),
             SizedBox(
               height: 30,

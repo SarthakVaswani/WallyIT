@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app/cat_model.dart';
-import 'package:wallpaper_app/data.dart';
-import 'package:wallpaper_app/widget.dart';
+import 'package:wallpaper_app/model/cat_model.dart';
+import 'package:wallpaper_app/model/data.dart';
+import 'package:wallpaper_app/widgets/CategoryGrid.dart';
 
 class CategoryPage extends StatefulWidget {
   @override

@@ -1,57 +1,52 @@
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import 'package:wallpaper_app/fullPage.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:wallpaper_app/UI/fullPage.dart';
 
-class CategoryScreem extends StatefulWidget {
-  final String category;
-  CategoryScreem({this.category});
+class WallpaperHome extends StatefulWidget {
   @override
-  _CategoryScreemState createState() => _CategoryScreemState();
+  _WallpaperHomeState createState() => _WallpaperHomeState();
 }
 
-class _CategoryScreemState extends State<CategoryScreem> {
-  List images0 = [];
-  int pages = 1;
+class _WallpaperHomeState extends State<WallpaperHome> {
+  List images = [];
+  int page = 1;
+  @override
+  void initState() {
+    super.initState();
+    fetchAPI();
+  }
 
-  getCATWallpaper() async {
-    await http.get(
-        Uri.parse(
-          "https://api.pexels.com/v1/search?query=${widget.category}&per_page=80&page=1",
-        ),
+  fetchAPI() async {
+    await http.get(Uri.parse('https://api.pexels.com/v1/curated?per_page=80'),
         headers: {
-          "Authorization":
-              "563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf"
+          'Authorization':
+              '563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf'
         }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
-        images0 = result['photos'];
+        images = result['photos'];
       });
+      // print(images);
     });
   }
 
   loadMore() async {
     setState(() {
-      pages = pages + 1;
+      page = page + 1;
     });
     String url =
-        'https://api.pexels.com/v1/search?query=${widget.category}&per_page=80&page=' +
-            pages.toString();
+        'https://api.pexels.com/v1/curated?per_page=80&page=' + page.toString();
     await http.get(Uri.parse(url), headers: {
       'Authorization':
           '563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf'
     }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
-        images0.addAll(result['photos']);
+        images.addAll(result['photos']);
       });
     });
-  }
-
-  void initState() {
-    getCATWallpaper();
-    super.initState();
   }
 
   @override
@@ -61,16 +56,11 @@ class _CategoryScreemState extends State<CategoryScreem> {
       body: SafeArea(
         child: Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                  icon: Icon(
-                    Icons.arrow_back,
-                    size: 35,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  }),
+            Container(
+              child: Text(
+                "Trending",
+                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+              ),
             ),
             Expanded(
               child: Stack(
@@ -79,8 +69,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
                     padding: EdgeInsets.symmetric(horizontal: 17) +
                         EdgeInsets.only(top: 15),
                     child: GridView.builder(
-                        itemCount: images0.length,
-                        shrinkWrap: true,
+                        itemCount: images.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisSpacing: 10,
                             crossAxisCount: 2,
@@ -93,7 +82,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FullScreen(
-                                    imageUrl: images0[index]['src']['large2x'],
+                                    imageUrl: images[index]['src']['large2x'],
                                   ),
                                 ),
                               );
@@ -106,7 +95,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                          images0[index]['src']['tiny']))),
+                                          images[index]['src']['tiny']))),
                             ),
                           );
                         }),
@@ -115,7 +104,7 @@ class _CategoryScreemState extends State<CategoryScreem> {
                     height: 10,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 10, bottom: 10),
+                    padding: const EdgeInsets.only(right: 12, bottom: 10),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: FloatingActionButton(

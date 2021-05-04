@@ -1,52 +1,57 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:wallpaper_app/fullPage.dart';
+import 'dart:convert';
 
-class WallpaperHome extends StatefulWidget {
+import 'package:wallpaper_app/UI/fullPage.dart';
+
+class CategoryScreem extends StatefulWidget {
+  final String category;
+  CategoryScreem({this.category});
   @override
-  _WallpaperHomeState createState() => _WallpaperHomeState();
+  _CategoryScreemState createState() => _CategoryScreemState();
 }
 
-class _WallpaperHomeState extends State<WallpaperHome> {
-  List images = [];
-  int page = 1;
-  @override
-  void initState() {
-    super.initState();
-    fetchAPI();
-  }
+class _CategoryScreemState extends State<CategoryScreem> {
+  List images0 = [];
+  int pages = 1;
 
-  fetchAPI() async {
-    await http.get(Uri.parse('https://api.pexels.com/v1/curated?per_page=80'),
+  getCATWallpaper() async {
+    await http.get(
+        Uri.parse(
+          "https://api.pexels.com/v1/search?query=${widget.category}&per_page=80&page=1",
+        ),
         headers: {
-          'Authorization':
-              '563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf'
+          "Authorization":
+              "563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf"
         }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
-        images = result['photos'];
+        images0 = result['photos'];
       });
-      // print(images);
     });
   }
 
   loadMore() async {
     setState(() {
-      page = page + 1;
+      pages = pages + 1;
     });
     String url =
-        'https://api.pexels.com/v1/curated?per_page=80&page=' + page.toString();
+        'https://api.pexels.com/v1/search?query=${widget.category}&per_page=80&page=' +
+            pages.toString();
     await http.get(Uri.parse(url), headers: {
       'Authorization':
           '563492ad6f91700001000001914b851b9b2b4053bbcc76fe059a05bf'
     }).then((value) {
       Map result = jsonDecode(value.body);
       setState(() {
-        images.addAll(result['photos']);
+        images0.addAll(result['photos']);
       });
     });
+  }
+
+  void initState() {
+    getCATWallpaper();
+    super.initState();
   }
 
   @override
@@ -56,11 +61,16 @@ class _WallpaperHomeState extends State<WallpaperHome> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
-              child: Text(
-                "Trending",
-                style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
-              ),
+            Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back,
+                    size: 35,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  }),
             ),
             Expanded(
               child: Stack(
@@ -69,7 +79,8 @@ class _WallpaperHomeState extends State<WallpaperHome> {
                     padding: EdgeInsets.symmetric(horizontal: 17) +
                         EdgeInsets.only(top: 15),
                     child: GridView.builder(
-                        itemCount: images.length,
+                        itemCount: images0.length,
+                        shrinkWrap: true,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisSpacing: 10,
                             crossAxisCount: 2,
@@ -82,7 +93,7 @@ class _WallpaperHomeState extends State<WallpaperHome> {
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => FullScreen(
-                                    imageUrl: images[index]['src']['large2x'],
+                                    imageUrl: images0[index]['src']['large2x'],
                                   ),
                                 ),
                               );
@@ -95,7 +106,7 @@ class _WallpaperHomeState extends State<WallpaperHome> {
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
                                       image: NetworkImage(
-                                          images[index]['src']['tiny']))),
+                                          images0[index]['src']['tiny']))),
                             ),
                           );
                         }),
@@ -104,7 +115,7 @@ class _WallpaperHomeState extends State<WallpaperHome> {
                     height: 10,
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(right: 12, bottom: 10),
+                    padding: const EdgeInsets.only(right: 10, bottom: 10),
                     child: Align(
                       alignment: Alignment.bottomRight,
                       child: FloatingActionButton(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wallpaper_app/cat_screen.dart';
+import 'package:wallpaper_app/UI/cat_screen.dart';
 
 class CatWidget extends StatelessWidget {
   final String imgUrl;
@@ -18,7 +18,10 @@ class CatWidget extends StatelessWidget {
                           category: catname,
                         )));
           },
-          child: Container(
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            elevation: 7,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
               child: Image.network(
